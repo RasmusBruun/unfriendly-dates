@@ -1,23 +1,31 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
+  "manifest_version": 3,
+  "name": "Unfriendly dates",
+  "version": "0.1",
+
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Unfriendly dates"
+  },
+
+  "content_scripts": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+        "matches": ["http://*/*", "https://*/*","*://github.com/*"],
+        "js": ["./static/js/content.js"]
     }
   ],
+
+  "icons": {
+    "16": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo192.png"
+  },
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
