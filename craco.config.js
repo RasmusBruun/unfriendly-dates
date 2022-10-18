@@ -5,7 +5,7 @@ module.exports = {
                 ...webpackConfig,
                 entry: {
                     main: [env === 'development' && require.resolve('react-dev-utils/webpackHotDevClient'),paths.appIndexJs].filter(Boolean),
-                    content: './src/content-scripts/format-date.ts',
+                    content: './src/contentScript.ts',
                 },
                 output: {
                     ...webpackConfig.output,

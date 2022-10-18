@@ -1,14 +1,12 @@
 import { DateFormat } from "../constants/types";
+import {
+  getRelativeTimeHtmlElems,
+  getTimeAgoHtmlElems,
+  getTimeColumnHtmlElems,
+} from "./elementQueries";
+import { getWidthByDateStyle } from "./util";
 
-function getRelativeTimeHtmlElems(): HTMLElement[] {
-  return Array.from(document.querySelectorAll("relative-time"));
-}
-
-function getTimeAgoHtmlElems(): HTMLElement[] {
-  return Array.from(document.querySelectorAll("time-ago"));
-}
-
-function unifyDates(html: HTMLElement, dateStyle: DateFormat) {
+const unifyDates = (html: HTMLElement, dateStyle: DateFormat) => {
   if (html.classList.contains("unfriendly_date")) {
     return html;
   }
@@ -27,10 +25,10 @@ function unifyDates(html: HTMLElement, dateStyle: DateFormat) {
 
   html.parentElement?.removeChild(html);
   unifiedDateElement.appendChild(html);
-}
+};
 
-function main() {
-  chrome.storage.sync.get(["dateTimeStyle"], function (result) {
+export const formatDates = () => {
+  chrome.storage.sync.get(["dateTimeStyle"], (result) => {
     const dateTimeStyle = result.dateTimeStyle || DateFormat.Short;
     getRelativeTimeHtmlElems().forEach((element) => {
       unifyDates(element, dateTimeStyle);
@@ -38,16 +36,8 @@ function main() {
     getTimeAgoHtmlElems().forEach((element) => {
       unifyDates(element, dateTimeStyle);
     });
+    getTimeColumnHtmlElems().forEach((element) => {
+      element.style.width = getWidthByDateStyle(dateTimeStyle);
+    });
   });
-}
-
-const observer = new MutationObserver((mutations, observer) => {
-  if (mutations[0].type === "attributes") {
-    main();
-  }
-});
-
-observer.observe(document, {
-  subtree: true,
-  attributes: true,
-});
+};
