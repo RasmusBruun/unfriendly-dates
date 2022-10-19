@@ -10,3 +10,16 @@ export const getWidthByDateStyle = (dateStyle: DateFormat): string => {
       return "350px";
   }
 };
+
+export const parseDateFormat = (dateformat: string) => {
+  switch (dateformat) {
+    case "short":
+      return DateFormat.Short;
+    case "medium":
+      return DateFormat.Medium;
+    case "long":
+      return DateFormat.Long;
+    default:
+      return DateFormat.Short;
+  }
+};
