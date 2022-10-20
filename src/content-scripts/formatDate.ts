@@ -6,7 +6,11 @@ import {
 } from "./elementQueries";
 import { getWidthByDateStyle } from "./util";
 
-const unifyDates = (html: HTMLElement, dateStyle: DateFormat) => {
+const unifyDates = (
+  html: HTMLElement,
+  dateStyle: DateFormat,
+  showTimeAgo: boolean
+) => {
   if (html.classList.contains("unfriendly_date")) {
     return html;
   }
@@ -20,21 +24,28 @@ const unifyDates = (html: HTMLElement, dateStyle: DateFormat) => {
   });
 
   const unifiedDateElement = document.createElement("span");
-  unifiedDateElement.innerHTML = unfriendlyDate + " - ";
+  unifiedDateElement.innerHTML = showTimeAgo
+    ? unfriendlyDate + " - "
+    : unfriendlyDate;
   html.parentElement?.appendChild(unifiedDateElement);
 
   html.parentElement?.removeChild(html);
-  unifiedDateElement.appendChild(html);
+  if (showTimeAgo) {
+    unifiedDateElement.appendChild(html);
+  }
 };
 
 export const formatDates = () => {
-  chrome.storage.sync.get(["dateTimeStyle"], (result) => {
+  chrome.storage.sync.get(["dateTimeStyle", "showTimeAgo"], (result) => {
+    console.log(result);
     const dateTimeStyle = result.dateTimeStyle || DateFormat.Short;
+    const showTimeAgo =
+      result.showTimeAgo !== undefined ? result.showTimeAgo : false;
     getRelativeTimeHtmlElems().forEach((element) => {
-      unifyDates(element, dateTimeStyle);
+      unifyDates(element, dateTimeStyle, showTimeAgo);
     });
     getTimeAgoHtmlElems().forEach((element) => {
-      unifyDates(element, dateTimeStyle);
+      unifyDates(element, dateTimeStyle, showTimeAgo);
     });
     getTimeColumnHtmlElems().forEach((element) => {
       element.style.width = getWidthByDateStyle(dateTimeStyle);
