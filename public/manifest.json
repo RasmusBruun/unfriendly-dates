@@ -3,11 +3,7 @@
   "name": "Unfriendly dates",
   "version": "0.1",
 
-  "permissions": [
-    "activeTab",
-    "scripting",
-    "storage"
-  ],
+  "permissions": ["activeTab", "scripting", "storage"],
 
   "action": {
     "default_popup": "index.html",
@@ -16,8 +12,8 @@
 
   "content_scripts": [
     {
-        "matches": ["http://*/*", "https://*/*","*://github.com/*"],
-        "js": ["./static/js/content.js"]
+      "matches": ["http://*/*", "https://*/*", "*://github.com/*"],
+      "js": ["./static/js/content.js"]
     }
   ],
 
