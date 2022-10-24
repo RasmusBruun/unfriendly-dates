@@ -4,7 +4,7 @@ import {
   getTimeAgoHtmlElems,
   getTimeColumnHtmlElems,
 } from "./elementQueries";
-import { getWidthByDateStyle } from "./util";
+import { getWidthByDateStyle } from "../components/util";
 
 const unifyDates = (
   html: HTMLElement,
