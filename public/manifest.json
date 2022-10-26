@@ -1,7 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Unfriendly dates",
-  "version": "0.1",
+  "Description": "Replaces instances of \"Friendly dates\" on GitHub with a user customisable date format. It can display both the precise time in a chosen format and optionally append the time ago format.",
+  "version": "0.0.1",
 
   "permissions": ["activeTab", "scripting", "storage"],
 
