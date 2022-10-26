@@ -45,7 +45,7 @@ export const formatDates = () => {
     (result) => {
       const dateTimeStyle = result.dateTimeStyle || DateFormat.Short;
       const showTimeAgo =
-        result.showTimeAgo !== undefined ? result.showTimeAgo : false;
+        result.showTimeAgo !== undefined ? result.showTimeAgo : true;
       const showAmPm = result.showAmPm !== undefined ? result.showAmPm : false;
 
       getRelativeTimeHtmlElems().forEach((element) => {
