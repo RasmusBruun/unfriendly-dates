@@ -21,12 +21,11 @@ export default function ToggleTimeAgo() {
       <input
         type="checkbox"
         id="showTimeAgo"
-        name="showTimeAgo"
         checked={showTimeAgo}
-        onChange={setStoredShowTimeAgo}
-        className="mr-2"
+        className="mr-2 w-4 h-4 self-center"
+        onClick={setStoredShowTimeAgo}
       />
-      Display time ago?
+      <label htmlFor="showTimeAgo">Display time ago?</label>
     </span>
   );
 }
