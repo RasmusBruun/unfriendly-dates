@@ -5,7 +5,7 @@ const SWITCH_BUTTON_ACTIVE =
 const SWITCH_BUTTON_INACTIVE =
   "bg-white hover:bg-gray-100 text-gray-800 font-semibold w-24 p-2 border border-gray-400 shadow";
 
-export default function TimeFormatButton() {
+export default function SwitchButtonTimeFormat() {
   const [showAmPm, setShowAmPm] = React.useState(true);
 
   chrome.storage.sync.get(["showAmPm"], function (result) {

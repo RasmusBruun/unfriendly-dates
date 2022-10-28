@@ -1,4 +1,4 @@
-import { DateFormat } from "../constants/types";
+import { DateFormat, TimeAgoFormat } from "../constants/types";
 import {
   getRelativeTimeHtmlElems,
   getTimeAgoHtmlElems,
@@ -9,7 +9,7 @@ import { getWidthByDateStyle } from "../components/util";
 const unifyDates = (
   html: HTMLElement,
   dateStyle: DateFormat,
-  showTimeAgo: boolean,
+  timeAgoFormat: TimeAgoFormat,
   showAmPm: boolean
 ) => {
   if (html.classList.contains("unfriendly_date")) {
@@ -28,31 +28,37 @@ const unifyDates = (
   );
 
   const unifiedDateElement = document.createElement("span");
-  unifiedDateElement.innerHTML = showTimeAgo
-    ? unfriendlyDate + " - "
-    : unfriendlyDate;
+  unifiedDateElement.innerHTML =
+    (timeAgoFormat === TimeAgoFormat.Before ? " - " : "") +
+    unfriendlyDate +
+    (timeAgoFormat === TimeAgoFormat.After ? " - " : "");
   html.parentElement?.appendChild(unifiedDateElement);
 
   html.parentElement?.removeChild(html);
-  if (showTimeAgo) {
+  if (timeAgoFormat === TimeAgoFormat.Before) {
+    unifiedDateElement.prepend(html);
+  }
+  if (timeAgoFormat === TimeAgoFormat.After) {
     unifiedDateElement.appendChild(html);
   }
 };
 
 export const formatDates = () => {
   chrome.storage.sync.get(
-    ["dateTimeStyle", "showTimeAgo", "showAmPm"],
+    ["dateTimeStyle", "timeAgoFormat", "showAmPm"],
     (result) => {
       const dateTimeStyle = result.dateTimeStyle || DateFormat.Short;
-      const showTimeAgo =
-        result.showTimeAgo !== undefined ? result.showTimeAgo : true;
+      const timeAgoFormat =
+        result.timeAgoFormat !== undefined
+          ? result.timeAgoFormat
+          : TimeAgoFormat.Hide;
       const showAmPm = result.showAmPm !== undefined ? result.showAmPm : false;
 
       getRelativeTimeHtmlElems().forEach((element) => {
-        unifyDates(element, dateTimeStyle, showTimeAgo, showAmPm);
+        unifyDates(element, dateTimeStyle, timeAgoFormat, showAmPm);
       });
       getTimeAgoHtmlElems().forEach((element) => {
-        unifyDates(element, dateTimeStyle, showTimeAgo, showAmPm);
+        unifyDates(element, dateTimeStyle, timeAgoFormat, showAmPm);
       });
       getTimeColumnHtmlElems().forEach((element) => {
         element.style.width = getWidthByDateStyle(dateTimeStyle);
