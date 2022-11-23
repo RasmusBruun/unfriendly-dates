@@ -19,8 +19,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "set INLINE_RUNTIME_CHUNK=false&& set NODE_OPTIONS=--openssl-legacy-provider&& craco start",
-    "build": "set INLINE_RUNTIME_CHUNK=false&& craco build"
+    "start": "set INLINE_RUNTIME_CHUNK=false&& craco start",
+    "build": "set INLINE_RUNTIME_CHUNK=false&& craco build",
+    "build:legacy": "set INLINE_RUNTIME_CHUNK=false&& set NODE_OPTIONS=--openssl-legacy-provider&& craco build"
   },
   "eslintConfig": {
     "extends": [
